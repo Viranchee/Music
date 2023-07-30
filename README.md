@@ -2,5 +2,14 @@
 
 My Music repo in git. Not exhaustive yet.
 
-Requirements to play them on command line: yt-dlp
+# Requirements 
+
+yt-dlp (and ffplay)
+
+# Usage
+
+``` bash
+source songs_shuffle.sh
+shuffle
+```
 
