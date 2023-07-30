@@ -1,18 +1,20 @@
+# Search and play mp4 video
 ytsearch() {
-  DefaultFormat="mp4"
-  Format="${2:-$DefaultFormat}"
-  yt-dlp -f $Format ytsearch:$1 -o - 2>/dev/null | ffplay -autoexit -i - &>/dev/null
+  yt-dlp -f mp4 ytsearch:"$@" -o - 2>/dev/null | ffplay -autoexit -i - &>/dev/null
 }
 
+# Play specific link
 ytvideo() {
-  ytsearch $1 mp4
+  yt-dlp -f mp4 $1 -o - 2>/dev/null | ffplay -autoexit -i - &>/dev/null
 }
 
+# Search and play music
 ytmusic() {
-  yt-dlp -f bestaudio ytsearch:$1 -o - 2>/dev/null | ffplay -nodisp -autoexit -i - &>/dev/null
+  yt-dlp -f bestaudio ytsearch:"$@" -o - 2>/dev/null | ffplay -nodisp -autoexit -i - &>/dev/null
 }
 
-shuffle() {
+# Play Random music from file by streaming over yt
+musicShuffle() {
   DefaultFile="./songslist.txt"
   Playlist="${1:-$DefaultFile}"
   # for (( ; ; )); do
@@ -21,6 +23,6 @@ shuffle() {
   song_name=$(tail -n $rand $Playlist | head -n 1)
   echo Now Playing: $song_name
   # ytmusic $song_name
-  ytvideo $song_name
+  ytsearch $song_name
   # done
 }
