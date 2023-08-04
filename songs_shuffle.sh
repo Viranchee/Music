@@ -3,9 +3,12 @@ ytsearch() {
   yt-dlp -f mp4 ytsearch:"$@" -o - 2>/dev/null | ffplay -autoexit -i - &>/dev/null
 }
 
-# Play specific link
-ytvideo() {
-  yt-dlp -f mp4 $1 -o - 2>/dev/null | ffplay -autoexit -i - &>/dev/null
+# Play specific link, remove tracking from it's urls
+yturl() {
+  URL=${$(pbpaste)%%&*} # Remove tracking from urls
+  DefaultFormat="mp4" # If I want to play songs from url, just specify `ba`
+  Format="${1:-$DefaultFormat}"
+  yt-dlp -f $Format $URL -o - 2>/dev/null | ffplay -autoexit -i - &>/dev/null
 }
 
 # Search and play music
